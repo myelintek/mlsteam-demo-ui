@@ -41,7 +41,7 @@
         v-for="(img, i) in images"
         :key="i"
         class="d-flex child-flex"
-        cols="2"
+        cols="3"
       >
         <v-card :loading="img.status == 'pending'">
           <v-img :src="img.url" aspect-ratio="1" class="grey lighten-2">
@@ -59,7 +59,13 @@
             </template>
           </v-img>
           <v-cart-text v-if="img.status === 'success'">
-            {{img.result}}
+            <v-data-table
+              :headers="headers"
+              :items="img.result"
+              hide-default-header
+              hide-default-footer
+              class="elevation-1"
+            ></v-data-table>
           </v-cart-text>
         </v-card>
       </v-col>
@@ -73,7 +79,15 @@ import { mapActions, mapState } from 'vuex'
 export default {
   name: 'Classification',
   data: () => ({
-    files: []
+    files: [],
+    headers: [
+      {
+        text: 'Class',
+        align: 'start',
+        value: 'class'
+      },
+      { text: 'Confidence', value: 'confidence' }
+    ]
   }),
   computed: {
     ...mapState(['images', 'results'])

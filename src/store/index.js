@@ -4,7 +4,7 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 const MAX_BATCH = 10
-const INFERENCE_API_URL = 'http://100.74.51.8/proxy/u98d33bc/infernece'
+const INFERENCE_API_URL = 'http://100.74.51.8/proxy/u98d33bc/inference'
 
 export default new Vuex.Store({
   state: {
@@ -17,7 +17,7 @@ export default new Vuex.Store({
       state.queue.push(image)
       console.log('queued image', image)
     },
-    finishInference: (state, name, result) => {
+    finishInference: (state, { name, result }) => {
       const i = state.images.findIndex((elm) => elm.name === name)
       const img = { ...state.images[i], status: 'success', result: result }
       state.images.splice(i, 1, img)
@@ -61,7 +61,7 @@ export default new Vuex.Store({
       ).then(function (res) {
         console.log('inference finish', res)
         for (const i in res.data) {
-          context.commit('finishInference', images[i].name, res.data[i])
+          context.commit('finishInference', { name: images[i].name, result: res.data[i] })
         }
       }).catch(function (res) {
         console.log('inference fail', res)
