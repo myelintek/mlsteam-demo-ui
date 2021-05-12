@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'vue-axios'
+import axios from 'axios'
 
 Vue.use(Vuex)
 const MAX_BATCH = 10
@@ -15,6 +15,7 @@ export default new Vuex.Store({
     enlist: (state, image) => {
       state.images.push({ name: image.name, url: URL.createObjectURL(image), status: 'pending', result: {} })
       state.queue.push(image)
+      console.log('queued image', image)
     },
     finishInference: (state, name, result) => {
       const i = state.images.findIndex((elm) => elm.name === name)
@@ -29,14 +30,18 @@ export default new Vuex.Store({
   },
   actions: {
     enqueue: async (context, image) => {
+      console.log('enlist image', image)
       await context.commit('enlist', image)
-      // context.dispatch('process')
+      context.dispatch('process')
     },
     process: (context) => {
+      console.log('process image')
       const q = context.state.queue
       if (q.length === 0) {
+        console.log('no image in queue')
         return
       }
+      console.log('image in queue', q)
       const images = []
       while (q.length > 0 && images.length < MAX_BATCH) {
         images.push(q.shift())
@@ -54,8 +59,14 @@ export default new Vuex.Store({
           }
         }
       ).then(function (res) {
+        console.log('inference finish', res)
         for (const i in res.data) {
           context.commit('finishInference', images[i].name, res.data[i])
+        }
+      }).catch(function (res) {
+        console.log('inference fail', res)
+        for (const i in images) {
+          context.commit('failInference', images[i].name)
         }
       })
       context.dispatch('process')
