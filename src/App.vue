@@ -10,7 +10,7 @@
           alt="MLSteam"
           class="shrink mr-2"
           contain
-          src="https://lh4.googleusercontent.com/iivbc8ZtNeLuMouK-LEdFzOqd_mGk6YYjUT-RtDp_Ip_dGB5OHLs0E99DFWWKF0GuQcFHg=w16383"
+          src="@/assets/logo.png"
           transition="scale-transition"
           width="200"
         />
