@@ -4,7 +4,7 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 const MAX_BATCH = 10
-const INFERENCE_API_URL = 'http://100.74.51.8/proxy/u98d33bc/inference'
+const INFERENCE_API_URL = 'inference'
 
 export default new Vuex.Store({
   state: {
