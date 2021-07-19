@@ -5,6 +5,7 @@
       color="white"
       dark
     >
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="parimary"></v-app-bar-nav-icon>
       <div class="d-flex align-center">
         <v-img
           alt="MLSteam"
@@ -31,7 +32,7 @@ export default {
   name: 'App',
 
   data: () => ({
-    files: []
+    drawer: false
   })
 }
 </script>
