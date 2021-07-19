@@ -1,0 +1,8 @@
+flask
+numpy
+Pillow
+keras
+Werkzeug
+tensorflow-gpu
+tensorflow_hub
+
