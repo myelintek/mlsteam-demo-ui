@@ -14,7 +14,7 @@ from werkzeug.utils import secure_filename
 TFHUB_CLASSIFY_MODEL = "https://tfhub.dev/google/imagenet/resnet_v2_50/classification/5"
 CACH_FOLDER = "/dev/shm/mlsteam-demo-ui"
 IMAGE_SHAPE = (224, 224)
-app = Flask(__name__, static_url_path='', static_folder='dist')
+app = Flask(__name__, static_url_path='', static_folder='static')
 
 
 class ImageClassificationService(object):
@@ -71,4 +71,4 @@ def inference():
 if __name__ == "__main__":
     if not os.path.exists(CACH_FOLDER):
         os.makedirs(CACH_FOLDER)
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=80)
